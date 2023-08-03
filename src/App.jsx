@@ -6,7 +6,7 @@ function App() {
 
   return (
     <MainLayout className="h-screen">
-      <Index></Index>
+      <Index />
     </MainLayout>
   )
 }

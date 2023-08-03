@@ -3,11 +3,9 @@ import Footer from "../../components/footer/Footer";
 
 const MainLayout = ({children}) => {
     return (
-        <div className="min-h-screen bg-gray-400">
+        <div className="flex flex-col min-h-screen justify-between bg-gray-600">
             <Navbar />
-            <section>
                 {children}
-            </section>
             <Footer />
         </div>
     )

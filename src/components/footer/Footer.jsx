@@ -1,8 +1,8 @@
 const Footer = () => {
     return (
-        <>
-            <p>Soy un footer</p>
-        </>
+        <div className="flex flex-row bg-black text-white font font-serif text-lg justify-center">
+            <p>footer</p>
+        </div>
     )
 }
 
