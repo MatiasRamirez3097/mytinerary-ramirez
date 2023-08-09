@@ -1,14 +1,11 @@
 import './App.css'
-import MainLayout from './layouts/main/MainLayout'
-import Index from './pages/index/Index'
+import Router from './Router'
 
 function App() {
 
-  return (
-    <MainLayout className="h-screen">
-      <Index />
-    </MainLayout>
-  )
+    return (
+        <Router />
+    )
 }
 
 export default App

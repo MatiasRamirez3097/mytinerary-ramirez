@@ -1,3 +1,9 @@
+import { Link, NavLink } from "react-router-dom"
+
+const links = [
+    {}
+]
+
 const Navbar = () => {
     return (
         <nav className="bg-black">
