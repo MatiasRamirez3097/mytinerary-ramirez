@@ -9,7 +9,7 @@ const Index = () => {
                         Find the perfect destination
                     </h1>
                     <p>Our app will help you find the perfect path for your next trip. With an easy-to-use interface and a host of itinerary options, planning your next trip has never been easier.</p>
-                    <a href="#" className=" w-2/12 border-spacing-2 border-2 text-center bg-blue-900">View More</a>
+                    <a href="#" className="sm:w-8/12 lg:w-2/12 border-spacing-2 border-2 text-center bg-blue-900">View More</a>
                 </div>
             </div>
             <div className="flex flex-row border-2 p-5 text-white justify-center w-11/12 h-60 self-center">

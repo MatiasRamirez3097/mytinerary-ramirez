@@ -1,5 +1,5 @@
 import { Footer, Navbar } from '../../components'
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const links = [
     {
@@ -17,7 +17,6 @@ const links = [
 ]
 
 const MainLayout = () => {
-    const location = useLocation();
 
     return (
         <div className="flex flex-col min-h-screen justify-between bg-gray-600">

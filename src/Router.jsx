@@ -13,7 +13,7 @@ const Routes = createBrowserRouter([
             },
             {
                 path: '*',
-                element: <div>aiuda</div>
+                element: <Cities />
             }
         ]
     }
