@@ -3,7 +3,7 @@ import { Carousel } from '../../components'
 const Index = () => {
     return (
         <div className="flex flex-col">
-            <div className="flex flex-row border-2 p-5 bg-[url(https://www.expreso.info/files/2020-04/Viaje_Combinado.jpg)] bg-cover text-white justify-center w-11/12 h-60 self-center">
+            <div className="flex flex-row border-2 p-5 bg-[url(https://www.expreso.info/files/2020-04/Viaje_Combinado.jpg)] bg-cover text-white justify-center w-11/12 h-96 self-center">
                 <div className="flex flex-col self-center">
                     <h1 className="text-3xl">
                         Find the perfect destination
