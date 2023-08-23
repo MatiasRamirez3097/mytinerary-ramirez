@@ -2,7 +2,6 @@ import { NavLink, useLocation } from "react-router-dom"
 
 const Anchor = ({ url, text }) => {
 
-    console.log(useLocation().pathname)
     return (
         <li>
             <NavLink className={() =>

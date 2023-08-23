@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Index, Cities } from './pages'
+import { Index, Cities, City } from './pages'
 import { MainLayout } from './layouts';
 
 const Routes = createBrowserRouter([
@@ -12,8 +12,16 @@ const Routes = createBrowserRouter([
                 element: <Index />
             },
             {
-                path: '*',
+                path: '/cities',
                 element: <Cities />
+            },
+            {
+                path: '/city/:id',
+                element: <City />
+            },
+            {
+                path: '*',
+                element: <p>Ups</p>
             }
         ]
     }

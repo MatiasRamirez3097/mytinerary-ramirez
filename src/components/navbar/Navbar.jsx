@@ -1,11 +1,6 @@
 import { Anchor } from '../'
 import { useState } from 'react'
 
-
-
-
-
-
 const Navbar = ({ links }) => {
     const [nav, setNav] = useState(false)
     const showNav = () => setNav(!nav)
