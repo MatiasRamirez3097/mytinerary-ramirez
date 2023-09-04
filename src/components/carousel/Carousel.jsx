@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react'
 
 const Carousel = ({ data }) => {
-    const [pictures, setPictures] = useState(() => {
-        if (data.length >= 4) return data.filter((item, index) => {
-            return index >= 0 && index < 4
-        })
-        else return []
-    })
+    const [pictures, setPictures] = useState([])
     const [pos, setPos] = useState(0)
     const prev = () => {
         if (pos == 0) {
@@ -30,7 +25,6 @@ const Carousel = ({ data }) => {
             }))
             setPos(pos - 4)
         }
-        console.log(pos)
     }
     const next = () => {
         if (pos + 4 + 4 <= data.length) {
@@ -49,7 +43,6 @@ const Carousel = ({ data }) => {
             }))
             setPos(0)
         }
-        console.log(pos)
     }
 
     useEffect(() => {
@@ -60,6 +53,12 @@ const Carousel = ({ data }) => {
             clearInterval(interval)
         }
     }, [pictures])
+
+    useEffect(() => {
+        setPictures(data.filter((item, index) => {
+            return index >= 0 && index < 4
+        }))
+    }, [data.length])
 
     return (
         <div className="flex flex-row">
