@@ -1,7 +1,6 @@
 import { Carousel } from '../../components'
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { server } from '../../Api'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCarousel } from '../../store/actions/citiesActions'
 
@@ -9,7 +8,7 @@ import { getCarousel } from '../../store/actions/citiesActions'
 const Index = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const carousel = useSelector(store => store.citiesReducer.carousel)
+    const { carousel } = useSelector(store => store.citiesReducer)
 
     useEffect(() => {
         dispatch(getCarousel())

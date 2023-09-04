@@ -8,7 +8,7 @@ const City = () => {
     const [showMore, setShowMore] = useState(null)
     const { id } = useParams();
     const dispatch = useDispatch()
-    const city = useSelector(store => store.citiesReducer.city)
+    const { city } = useSelector(store => store.citiesReducer)
 
     useEffect(() => {
         dispatch(getCity(id))

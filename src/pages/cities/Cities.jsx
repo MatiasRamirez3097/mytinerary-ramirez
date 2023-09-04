@@ -7,8 +7,7 @@ import { getCities, searchAction } from '../../store/actions/citiesActions';
 const Cities = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const cities = useSelector(store => store.citiesReducer.cities)
-    const search = useSelector(store => store.citiesReducer.search)
+    const { cities, search } = useSelector(store => store.citiesReducer)
 
     const filter = (e) => {
         dispatch(searchAction(e.target.value))
