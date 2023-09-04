@@ -36,6 +36,10 @@ const citiesReducer = createReducer(initialState,
             const newState = { ...state, carousel: action.payload }
             return newState
         })
+        .addCase(getCarousel.rejected, (state, action) => {
+            const newState = { ...state, carousel: action.payload }
+            return newState
+        })
 )
 
 export default citiesReducer
