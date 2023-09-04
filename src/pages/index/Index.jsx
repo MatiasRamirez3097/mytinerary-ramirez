@@ -1,23 +1,18 @@
 import { Carousel } from '../../components'
+import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-import api from '../../Api'
+import { server } from '../../Api'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCarousel } from '../../store/actions/citiesActions'
+
 
 const Index = () => {
-    const [data, setData] = useState([])
-
-    const getData = () => {
-        axios.get(`${api}/cities/`)
-            .then(res => {
-                return res.data
-            })
-            .then(data => {
-                setData(data.response)
-            })
-    }
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const carousel = useSelector(store => store.citiesReducer.carousel)
 
     useEffect(() => {
-        getData()
+        dispatch(getCarousel())
     }, [])
 
     return (
@@ -28,11 +23,11 @@ const Index = () => {
                         Find the perfect destination
                     </h1>
                     <p>Our app will help you find the perfect path for your next trip. With an easy-to-use interface and a host of itinerary options, planning your next trip has never been easier.</p>
-                    <a href="#" className="sm:w-8/12 lg:w-2/12 border-spacing-2 border-2 text-center bg-blue-900">View More</a>
+                    <button onClick={() => navigate('/cities')} className="sm:w-8/12 lg:w-2/12 border-spacing-2 border-2 text-center bg-blue-900">View More</button>
                 </div>
             </div>
             <div className="flex flex-rowgrid justify-center border-2 p-2 w-11/12 self-center">
-                <Carousel data={data} />
+                <Carousel data={carousel} />
             </div>
         </div>
     )

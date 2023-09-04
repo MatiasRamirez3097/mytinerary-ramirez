@@ -1,31 +1,23 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card } from '../../components';
-import api from '../../Api'
+import { useDispatch, useSelector } from 'react-redux';
+import { getCities, searchAction } from '../../store/actions/citiesActions';
 
 const Cities = () => {
     const navigate = useNavigate();
-    const [data, setData] = useState([])
-    const [search, setSearch] = useState('')
-
-    const getData = (value = '') => {
-        axios.get(`${api}/cities/${value}`)
-            .then(res => {
-                return res.data
-            })
-            .then(data => {
-                setData(data.response)
-            })
-    }
+    const dispatch = useDispatch()
+    const cities = useSelector(store => store.citiesReducer.cities)
+    const search = useSelector(store => store.citiesReducer.search)
 
     const filter = (e) => {
-        setSearch(e.target.value)
-        if (e.target.value.length >= 3) getData(e.target.value)
-        else getData()
+        dispatch(searchAction(e.target.value))
+        if (e.target.value.length >= 3) dispatch(getCities(e.target.value))
+        else dispatch(getCities())
     }
     useEffect(() => {
-        getData()
+        dispatch(getCities())
     }, [])
 
     return <>
@@ -41,7 +33,7 @@ const Cities = () => {
         </div>
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center p-4">
             {
-                data.map((city, index) => {
+                cities.map((city, index) => {
                     return <Card
                         key={index}
                         name={city.name}
