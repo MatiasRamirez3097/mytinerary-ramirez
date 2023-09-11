@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card } from '../../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCities, searchAction } from '../../store/actions/citiesActions';
+import { getCities, searchAction } from '../../redux/actions/citiesActions';
 
 const Cities = () => {
     const navigate = useNavigate();

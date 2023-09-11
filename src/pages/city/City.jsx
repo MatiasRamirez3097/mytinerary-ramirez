@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { getCity } from "../../store/actions/citiesActions"
+import { getCity } from "../../redux/actions/citiesActions"
 import { Itineraries, ItinerariesNotFound } from "../../components"
 
 const City = () => {

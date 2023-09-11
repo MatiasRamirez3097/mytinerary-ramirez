@@ -2,7 +2,7 @@ import { Carousel } from '../../components'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCarousel } from '../../store/actions/citiesActions'
+import { getCarousel } from '../../redux/actions/citiesActions'
 
 
 const Index = () => {
