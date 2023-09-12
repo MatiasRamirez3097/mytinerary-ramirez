@@ -1,31 +1,37 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { getCountries } from "../../redux/actions/usersActions"
+import { useFormik } from 'formik'
+import validate from "./validate"
 
 const SignUp = ({ action, action2 }) => {
-    const [data, setData] = useState({
-        birth_date: "",
-        country: "",
-        email: "",
-        name: "",
-        surname: "",
-        password: "",
-        phone: "",
-        photo: ""
-    })
+    const formik = useFormik({
+        initialValues: {
+            birth_date: "",
+            country: "",
+            email: "",
+            name: "",
+            surname: "",
+            password: "",
+            phone: "",
+            photo: "",
+            repassword: ""
+        },
+        validate,
+        onSubmit: values => {
+            server.post('/auth', {
+                ...values
+            })
+        },
+    });
     const dispatch = useDispatch()
     const { countries } = useSelector(store => store.usersReducer)
-    const onChange = ({ target }) => {
-        setData((prevState) => {
-            return { ...prevState, [target.name]: target.value }
-        })
-    }
 
     useEffect(() => {
         dispatch(getCountries())
     }, [])
 
-    return <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    return <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={formik.handleSubmit}>
         <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
                 <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -42,13 +48,15 @@ const SignUp = ({ action, action2 }) => {
                         </label>
                         <input
                             name="name"
-                            onChange={(e) => onChange(e)}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="name"
                             type="text"
                             placeholder="Name"
-                            value={data.name}
+                            value={formik.values.name}
                         />
+                        {formik.errors.name ? <div className="text-red-500 text-sm">{formik.errors.name}</div> : null}
                         <label
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="surname"
@@ -57,12 +65,15 @@ const SignUp = ({ action, action2 }) => {
                         </label>
                         <input
                             name="surname"
-                            onChange={(e) => onChange(e)}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="surname"
                             type="text"
                             placeholder="Surname"
-                            value={data.surname} />
+                            value={formik.values.surname}
+                        />
+                        {formik.errors.surname ? <div className="text-red-500 text-sm">{formik.errors.surname}</div> : null}
                         <label
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="birth_date"
@@ -71,11 +82,14 @@ const SignUp = ({ action, action2 }) => {
                         </label>
                         <input
                             name="birth_date"
-                            onChange={(e) => onChange(e)}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="birth_date"
                             type="date"
-                            value={data.birth_date} />
+                            value={formik.values.birth_date}
+                        />
+                        {formik.errors.birth_date ? <div className="text-red-500 text-sm">{formik.errors.birth_date}</div> : null}
                         <label
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="phone"
@@ -84,12 +98,15 @@ const SignUp = ({ action, action2 }) => {
                         </label>
                         <input
                             name="phone"
-                            onChange={(e) => onChange(e)}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="phone"
                             type="number"
                             placeholder="Phone"
-                            value={data.phone} />
+                            value={formik.values.phone}
+                        />
+                        {formik.errors.phone ? <div className="text-red-500 text-sm">{formik.errors.phone}</div> : null}
                         <label
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="photo"
@@ -98,12 +115,15 @@ const SignUp = ({ action, action2 }) => {
                         </label>
                         <input
                             name="photo"
-                            onChange={(e) => onChange(e)}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="photo"
                             type="text"
                             placeholder="Photo"
-                            value={data.photo} />
+                            value={formik.values.photo}
+                        />
+                        {formik.errors.photo ? <div className="text-red-500 text-sm">{formik.errors.photo}</div> : null}
                         <label
                             className="block text-gray-700 text-sm font-bold mb-2"
                             htmlFor="country"
@@ -112,22 +132,35 @@ const SignUp = ({ action, action2 }) => {
                         </label>
                         <select
                             name="country"
-                            onChange={(e) => onChange(e)}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="country"
                             placeholder="Country"
-                            value={data.country}
+                            value={formik.values.country}
                         >
+                            <option disabled value={""}> -- select an option -- </option>
                             {
                                 countries.map((country, index) => {
                                     return <option key={index} value={country} >{country}</option>
                                 })
                             }
                         </select>
+                        {formik.errors.country ? <div className="text-red-500 text-sm">{formik.errors.country}</div> : null}
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                             Email
                         </label>
-                        <input name="email" onChange={(e) => onChange(e)} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="Username" value={data.email} />
+                        <input
+                            name="email"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="email"
+                            type="text"
+                            placeholder="surname"
+                            value={formik.values.email}
+                        />
+                        {formik.errors.email ? <div className="text-red-500 text-sm">{formik.errors.email}</div> : null}
                     </div>
                     <div className="mb-6">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
@@ -137,30 +170,31 @@ const SignUp = ({ action, action2 }) => {
                             className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             id="password"
                             name="password"
-                            onChange={(e) => onChange(e)}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             type="password"
                             placeholder="******************"
-                            value={data.password}
+                            value={formik.values.password}
                         />
+                        {formik.errors.password ? <div className="text-red-500 text-sm">{formik.errors.password}</div> : null}
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                             Re-enter Password
                         </label>
                         <input
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                            id="password"
+                            id="repassword"
+                            name="repassword"
                             type="password"
                             placeholder="******************"
+                            value={formik.values.repassword}
                         />
-                        <p className="text-red-500 text-xs italic">Please choose a password.</p>
+                        {formik.errors.repassword ? <div className="text-red-500 text-sm">{formik.errors.repassword}</div> : null}
                     </div>
                     <div className="flex items-center justify-between">
                         <button onClick={() => action2()} className="text-blue hover:underline text-sm italic" type="button">
                             Already have an account?
-                        </button>
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                            Sign Up
                         </button>
                     </div>
                 </div>
@@ -168,9 +202,9 @@ const SignUp = ({ action, action2 }) => {
         </div>
         <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
             <button
-                type="button"
+                type="submit"
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
-                Login
+                Sign Up
             </button>
             <button
                 onClick={action}
