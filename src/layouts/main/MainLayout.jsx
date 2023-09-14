@@ -86,6 +86,9 @@ const MainLayout = () => {
                             fields={signInFields}
                             schema={signInSchema}
                             submitText="Sign In"
+                            sendSubmit={(values) => {
+                                dispatch(signIn(values))
+                            }}
                         ></CustomForm>
                     }
                     {

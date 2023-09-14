@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 import { countryApi, server } from "../../Api";
 import { ls } from '../../utils/ls.js'
 
@@ -52,11 +52,11 @@ const signUp = createAsyncThunk('signUp', async (data) => {
             status: "online"
         }
     } catch (error) {
-        return {
+        return isRejectedWithValue({
             user: {},
             token: null,
             status: 'offline'
-        }
+        })
     }
 })
 

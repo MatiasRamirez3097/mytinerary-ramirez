@@ -26,6 +26,10 @@ const usersReducer = createReducer(initialState,
             const newState = { ...state, ...action.payload }
             return newState
         })
+        .addCase(signUp.rejected, (state, action) => {
+            const newState = { ...state, ...action.payload }
+            return newState
+        })
         .addCase(authenticate.fulfilled, (state, action) => {
             const newState = { ...state, ...action.payload }
             return newState
