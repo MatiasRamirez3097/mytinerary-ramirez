@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getCountries, signIn, signUp } from "../../redux/actions/usersActions"
+import { getCountries } from "../../redux/actions/usersActions"
 import { Form, Formik } from 'formik'
 import { InputFieldWithLabel } from '../'
 
@@ -21,7 +21,7 @@ const renderFields = (countries, errors, fields, touched) => {
 
 const CustomForm = ({ action, action2, fields, googleUser = null, schema, sendSubmit = null, submitText }) => {
     const dispatch = useDispatch()
-    const { countries, user } = useSelector(store => store.usersReducer)
+    const { countries } = useSelector(store => store.usersReducer)
 
     useEffect(() => {
         dispatch(getCountries())
