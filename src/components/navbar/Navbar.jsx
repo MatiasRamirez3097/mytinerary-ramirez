@@ -19,6 +19,16 @@ const Navbar = ({ links }) => {
                 </button>
                 <div className={!nav ? "hidden w-full md:block md:w-auto" : "w-full md:block md:w-auto"}>
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                        {Object.keys(user).length > 0 &&
+                            <>
+                                <li>
+                                    <img className='w-5 m-0 rounded-full' src={user.photo} alt='user_photo'></img>
+                                </li>
+                                <li>
+                                    <p>{user.name}</p>
+                                </li>
+                            </>
+                        }
                         {
                             links.map((item, i) => {
                                 return (Object.keys(user).length > 0 && item.text == 'Sign Up') ||
