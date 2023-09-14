@@ -1,43 +1,38 @@
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
-import { getCountries } from "../../redux/actions/usersActions"
-import { Field, Form, Formik } from 'formik'
-import signUpSchema from "./signUpSchema"
+import { getCountries, signIn, signUp } from "../../redux/actions/usersActions"
+import { Form, Formik } from 'formik'
 import { InputFieldWithLabel } from '../'
-import { server } from "../../Api"
 
-const fields = [
-    { name: "name", label: "Name", type: "text", value: "" },
-    { name: "surname", label: "Surname", type: "text", value: "" },
-    { name: "birth_date", label: "Birh date", type: "date", value: "" },
-    { name: "phone", label: "Phone", type: "number", value: "" },
-    { name: "photo", label: "Photo", type: "text", value: "" },
-    { name: "country", label: "Country", type: "select", value: "" },
-    { name: "email", label: "Email", type: "text", value: "" },
-    { name: "password", label: "Password", type: "password", value: "" },
-    { name: "repassword", label: "Re-enter password", type: "password", value: "" }
-]
-const SignUp = ({ action, action2 }) => {
+const renderFields = (countries, errors, fields, touched) => {
+    return fields.map((field, i) => {
+        return <InputFieldWithLabel
+            error={errors[field.name]}
+            label={field.label}
+            name={field.name}
+            touched={touched[field.name]}
+            values={field.name == 'country' ? countries : undefined}
+            key={i}
+            type={field.type}
+        />
+
+    })
+}
+
+const CustomForm = ({ action, action2, fields, googleUser = null, schema, sendSubmit = null, submitText }) => {
     const dispatch = useDispatch()
-    const { countries } = useSelector(store => store.usersReducer)
+    const { countries, user } = useSelector(store => store.usersReducer)
 
     useEffect(() => {
         dispatch(getCountries())
     }, [])
 
+
     return <Formik
         initialValues={fields.reduce((o, key) => ({ ...o, [key.name]: key.value }), {})}
-        validationSchema={signUpSchema}
-        onSubmit={async (values, actions) => {
-            const { repassword, ...user } = values
-            await server.post('/auth', {
-                ...user
-            }).then(respone => {
-                actions.resetForm()
-                action()
-            }).catch(err => {
-
-            })
+        validationSchema={schema}
+        onSubmit={(values, actions) => {
+            sendSubmit(values, actions)
         }}
     >
         {({ errors, touched }) => (
@@ -51,18 +46,7 @@ const SignUp = ({ action, action2 }) => {
                         <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                             <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">Sign Up</h3>
                             {
-                                fields.map((field, i) => {
-                                    return <InputFieldWithLabel
-                                        error={errors[field.name]}
-                                        label={field.label}
-                                        name={field.name}
-                                        touched={touched[field.name]}
-                                        values={field.name == 'country' ? countries : undefined}
-                                        key={i}
-                                        type={field.type}
-                                    />
-
-                                })
+                                renderFields(countries, errors, fields, touched)
                             }
                             <div className="flex items-center justify-between">
                                 <button onClick={() => action2()} className="text-blue hover:underline text-sm italic" type="button">
@@ -76,7 +60,7 @@ const SignUp = ({ action, action2 }) => {
                     <button
                         type="submit"
                         className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
-                        Sign Up
+                        {submitText}
                     </button>
                     <button
                         onClick={action}
@@ -89,5 +73,4 @@ const SignUp = ({ action, action2 }) => {
         )}
     </Formik >
 }
-
-export default SignUp
+export default CustomForm
