@@ -8,8 +8,7 @@ import InputFieldWithLabel from './inputFieldWithLabel/InputFieldWithLabel'
 import Itineraries from './itineraries/Itineraries'
 import ItinerariesNotFound from './itineraries/ItinerariesNotFound'
 import Modal from './modal/Modal'
-import SignIn from './signIn/SignIn'
 import CustomForm from './form/Form'
 
 
-export { Anchor, Button, Card, Carousel, CustomForm, Footer, InputFieldWithLabel, Itineraries, ItinerariesNotFound, Modal, Navbar, SignIn }
+export { Anchor, Button, Card, Carousel, CustomForm, Footer, InputFieldWithLabel, Itineraries, ItinerariesNotFound, Modal, Navbar }
