@@ -36,14 +36,10 @@ const CustomForm = ({ action, action2, fields, googleUser = null, schema, sendSu
         }}
     >
         {({ errors, touched }) => (
-            <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="sm:flex sm:items-start">
-                        <div
-                            className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-
-                        </div>
-                        <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+            <Form className="px-8 pt-6 pb-8 mb-4 w-full">
+                <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 w-full">
+                    <div className="sm:flex sm:items-start w-full">
+                        <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
                             <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">Sign Up</h3>
                             {
                                 renderFields(countries, errors, fields, touched)

@@ -12,11 +12,32 @@ const InputFieldWithLabel = ({ error = null, label, name, type, touched = null, 
         >
             {({ field }) => (
                 type != 'select' ? <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none 
+                        bg-transparent 
+                        w-full 
+                        text-gray-700 
+                        py-1 
+                        px-2 
+                        leading-tight 
+                        border-b
+                        border-cyan-500
+                        focus:outline-none"
                     type={type}
                     {...field}
                 /> :
-                    <select {...field}>
+                    <select
+                        className="appearance-none 
+                        bg-transparent 
+                        w-full 
+                        text-gray-700 
+                        py-1 
+                        px-2 
+                        leading-tight 
+                        border-b
+                        border-cyan-500
+                        focus:outline-none"
+                        {...field}
+                    >
                         <option disabled value={""}> -- select an option -- </option>
                         {
                             values.map((value, index) => {

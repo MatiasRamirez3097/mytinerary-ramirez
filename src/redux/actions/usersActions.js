@@ -11,8 +11,15 @@ const getCountries = createAsyncThunk('getCountries', async () => {
     }
 })
 
-const logout = createAction('logout', () => {
-
+const logOut = createAction('logout', () => {
+    ls.clear()
+    return {
+        payload: {
+            user: {},
+            token: null,
+            status: 'offline'
+        }
+    }
 })
 
 const signIn = createAsyncThunk('signIn', async (data) => {
@@ -24,7 +31,8 @@ const signIn = createAsyncThunk('signIn', async (data) => {
     ls.set("token", res.data.token)
     return {
         user: res.data.user ? res.data.user : {},
-        token: res.data.token ? res.data.token : null
+        token: res.data.token ? res.data.token : null,
+        status: 'online'
     }
 
 })
@@ -66,4 +74,4 @@ const authenticate = createAsyncThunk('authenticate', async () => {
 
 })
 
-export { authenticate, getCountries, signIn, signUp }
+export { authenticate, getCountries, logOut, signIn, signUp }

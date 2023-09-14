@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { authenticate, getCountries, signIn, signUp } from "../actions/usersActions";
+import { authenticate, getCountries, logOut, signIn, signUp } from "../actions/usersActions";
 
 const initialState = {
     countries: [],
@@ -27,6 +27,10 @@ const usersReducer = createReducer(initialState,
             return newState
         })
         .addCase(authenticate.fulfilled, (state, action) => {
+            const newState = { ...state, ...action.payload }
+            return newState
+        })
+        .addCase(logOut, (state, action) => {
             const newState = { ...state, ...action.payload }
             return newState
         })

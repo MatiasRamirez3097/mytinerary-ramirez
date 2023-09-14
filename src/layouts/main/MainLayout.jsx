@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CustomForm, Footer, Modal, Navbar } from '../../components'
 import { Outlet } from "react-router-dom";
 import { signUpFields, signUpSchema } from '../../components/form/signUpSchema'
 import { signInFields, signInSchema } from '../../components/form/signInSchema'
-import { signIn, signUp } from '../../redux/actions/usersActions';
+import { logOut, signIn, signUp } from '../../redux/actions/usersActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
 import jwtDecode from 'jwt-decode'
 import { googleFields, signInGoogleSchema } from '../../components/form/signInGoogleSchema';
+import { links } from './links';
 
 const MainLayout = () => {
     const dispatch = useDispatch()
@@ -23,55 +24,45 @@ const MainLayout = () => {
             type: type
         })
     }
-    const links = [
-        {
-            url: '/',
-            text: 'Home'
-        },
-        {
-            url: '/cities',
-            text: 'Cities'
-        },
-        {
-            text: 'Sign In',
-            action: () => changeModal(true, 'signIn')
-        },
-        {
-            text: 'Sign Up',
-            action: () => changeModal(true, 'signUp')
-        },
-        {
-            text: 'Logout',
-            action: () => { }
-        }
-    ]
+
+
+    useEffect(() => {
+        changeModal()
+    }, [Object.keys(user).length == 0])
 
     return (
         <div className="flex flex-col min-h-screen justify-between bg-gray-600">
-            <Navbar links={links} />
+            <Navbar links={links(
+                () => changeModal(true, 'signIn'),
+                () => changeModal(true, 'signUp'),
+                () => dispatch(logOut())
+            )} />
             {
                 modal.show && Object.keys(user).length == 0 && <Modal>
-                    <GoogleOAuthProvider
-                        clientId={import.meta.env.VITE_GOOGLE_ID}
-                    >
-                        <GoogleLogin
-                            onSuccess={(credentialResponse) => {
-                                const userDecoded = jwtDecode(credentialResponse.credential)
-                                dispatch(signIn({
-                                    google: true,
-                                    ...userDecoded
-                                }))
-                                setModal({
-                                    show: true,
-                                    type: 'googleSign'
-                                })
-                                setGoogleUser(userDecoded)
-                            }}
-                            onError={() => {
-                                console.log('Login Failed');
-                            }}
-                        />
-                    </GoogleOAuthProvider>;
+                    <div className="flex justify-center items-center mt-3 pt-3">
+                        <GoogleOAuthProvider
+                            clientId={import.meta.env.VITE_GOOGLE_ID}
+                        >
+                            <GoogleLogin
+                                className="flex mt-3 pt-3 border-2 border-blue-500"
+                                onSuccess={(credentialResponse) => {
+                                    const userDecoded = jwtDecode(credentialResponse.credential)
+                                    dispatch(signIn({
+                                        google: true,
+                                        ...userDecoded
+                                    }))
+                                    setModal({
+                                        show: true,
+                                        type: 'googleSign'
+                                    })
+                                    setGoogleUser(userDecoded)
+                                }}
+                                onError={() => {
+                                    console.log('Login Failed');
+                                }}
+                            />
+                        </GoogleOAuthProvider>
+                    </div>;
                     {
                         modal.type == 'signUp' &&
                         <CustomForm
