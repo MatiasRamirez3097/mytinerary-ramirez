@@ -44,7 +44,6 @@ const signUp = createAsyncThunk('signUp', async (data) => {
             ...user,
             password: !user.password && google ? user.email + import.meta.env.VITE_GOOGLE_KEY : user.password,
         })
-        console.log(res)
         ls.set("token", res.data.response.token)
         return {
             user: res.data.response.user,
@@ -52,11 +51,12 @@ const signUp = createAsyncThunk('signUp', async (data) => {
             status: "online"
         }
     } catch (error) {
-        return isRejectedWithValue({
+        return {
             user: {},
             token: null,
-            status: 'offline'
-        })
+            status: 'offline',
+            error: error.response.data.code
+        }
     }
 })
 

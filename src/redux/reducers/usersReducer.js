@@ -5,7 +5,8 @@ const initialState = {
     countries: [],
     token: null,
     user: {},
-    status: 'offline'
+    status: 'offline',
+    error: null
 }
 
 const usersReducer = createReducer(initialState,
@@ -27,6 +28,7 @@ const usersReducer = createReducer(initialState,
             return newState
         })
         .addCase(signUp.rejected, (state, action) => {
+            console.log(action.payload)
             const newState = { ...state, ...action.payload }
             return newState
         })

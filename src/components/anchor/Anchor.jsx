@@ -2,8 +2,6 @@ import { NavLink, useLocation } from "react-router-dom"
 import Button from "../button/Button";
 
 const Anchor = ({ action = null, url = null, text }) => {
-    console.log(url)
-    console.log(useLocation().pathname)
     return (
         <li>
             {url ?

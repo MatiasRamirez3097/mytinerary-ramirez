@@ -9,10 +9,11 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
 import jwtDecode from 'jwt-decode'
 import { googleFields, signInGoogleSchema } from '../../components/form/signInGoogleSchema';
 import { links } from './links';
+import Swal from 'sweetalert2';
 
 const MainLayout = () => {
     const dispatch = useDispatch()
-    const { user } = useSelector(store => store.usersReducer)
+    const { error, user } = useSelector(store => store.usersReducer)
     const [modal, setModal] = useState({
         show: false,
         type: null
@@ -25,10 +26,23 @@ const MainLayout = () => {
         })
     }
 
+    console.log(error)
+    useEffect(() => {
+        if (Object.keys(user).length == 0 && error) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'This email is already registered, log in!',
+                icon: 'error',
+                confirmButtonText: 'Ok!',
+
+            }).then(() => changeModal(true, 'signIn'))
+        }
+    }, [user, error])
 
     useEffect(() => {
+        console.log('hola')
         changeModal()
-    }, [Object.keys(user).length == 0])
+    }, [Object.keys(user).length > 0])
 
     return (
         <div className="flex flex-col min-h-screen justify-between bg-gray-600">
